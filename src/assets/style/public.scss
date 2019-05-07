@@ -1,0 +1,10 @@
+$bg-color: #f0f2f5;
+
+// 填满父元素
+%full {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
