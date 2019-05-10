@@ -25,7 +25,7 @@
 <script>
 import Identify from './Identify'
 import { login } from '@/api/user'
-// import cookies from '@/utils/cookies'
+import utils from '@/utils'
 
 export default {
   components: {
@@ -94,6 +94,11 @@ export default {
       this.loginForm.validateFields(['username', 'password'], { force: true }, (err, val) => {
         if (!err) {
           login(val).then(res => {
+            utils.saveLogin(res.token)
+            // 更新路由 尝试去获取需要重定向的页面完整地址
+            const path = this.$route.params.redirect
+            // 根据是否存有重定向页面判断如何重定向
+            this.$router.replace(path ? { path } : '/index')
             console.log(res)
           })
         }

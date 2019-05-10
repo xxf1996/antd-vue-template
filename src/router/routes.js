@@ -14,7 +14,8 @@ const frameIn = [
         path: 'index',
         name: 'index',
         meta: {
-          auth: true
+          auth: true,
+          title: '首页'
         },
         component: () => import('@/pages/home/Index')
       },
