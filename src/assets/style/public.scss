@@ -1,4 +1,6 @@
-$bg-color: #f0f2f5;
+$bg-color: #f0f2f5; // 全局背景色
+$header-bg: #fff; // 顶部导航栏背景色
+$header-height: 64px; // 顶部导航栏高度
 
 // 填满父元素
 %full {
@@ -7,4 +9,12 @@ $bg-color: #f0f2f5;
   right: 0px;
   bottom: 0px;
   left: 0px;
+}
+
+// 水平垂直居中
+.full-center {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
 }

@@ -1,51 +1,52 @@
 import layout from '@/layout/Layout'
+import demo from './demo'
 
 /**
  * 在主框架内显示
  */
-const frameIn = [
-  {
-    path: '/',
-    redirect: { name: 'index' },
-    component: layout,
-    children: [
-      // 首页 必须 name:index
-      {
-        path: 'index',
-        name: 'index',
-        meta: {
-          auth: true,
-          title: '首页'
+const frameIn = {
+  path: '/',
+  redirect: { name: 'index' },
+  component: layout,
+  children: [
+    // 首页 必须 name:index
+    {
+      path: 'index',
+      name: 'index',
+      meta: {
+        auth: true,
+        title: '首页',
+        icon: 'home'
+      },
+      component: () => import('@/pages/home/Index')
+    },
+    // 刷新页面 必须保留
+    {
+      path: 'refresh',
+      name: 'refresh',
+      hidden: true,
+      component: {
+        beforeRouteEnter (to, from, next) {
+          next(vm => vm.$router.replace(from.fullPath))
         },
-        component: () => import('@/pages/home/Index')
-      },
-      // 刷新页面 必须保留
-      {
-        path: 'refresh',
-        name: 'refresh',
-        hidden: true,
-        component: {
-          beforeRouteEnter (to, from, next) {
-            next(vm => vm.$router.replace(from.fullPath))
-          },
-          render: h => h()
-        }
-      },
-      // 页面重定向 必须保留
-      {
-        path: 'redirect/:route*',
-        name: 'redirect',
-        hidden: true,
-        component: {
-          beforeRouteEnter (to, from, next) {
-            next(vm => vm.$router.replace(JSON.parse(from.params.route)))
-          },
-          render: h => h()
-        }
+        render: h => h()
       }
-    ]
-  }
-]
+    },
+    // 页面重定向 必须保留
+    {
+      path: 'redirect/:route*',
+      name: 'redirect',
+      hidden: true,
+      component: {
+        beforeRouteEnter (to, from, next) {
+          next(vm => vm.$router.replace(JSON.parse(from.params.route)))
+        },
+        render: h => h()
+      }
+    },
+    demo
+  ]
+}
 
 /**
  * 在主框架之外显示
@@ -76,7 +77,7 @@ export const frameInRoutes = frameIn
 
 // 重新组织后导出
 export default [
-  ...frameIn,
+  frameIn,
   ...frameOut,
   ...errorPage
 ]
