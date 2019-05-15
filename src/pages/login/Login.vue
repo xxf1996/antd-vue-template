@@ -1,5 +1,8 @@
 <template>
   <a-form :form="loginForm" @submit="handleLogin">
+    <a-form-item>
+      <logo />
+    </a-form-item>
     <a-form-item label="账号">
       <a-input placeholder="账号" size="large" v-decorator="loginRule.user">
         <a-icon slot="prefix" type="user"></a-icon>
@@ -23,13 +26,16 @@
 </template>
 
 <script>
+import Logo from '@/components/common/Logo'
+import { mapMutations } from 'vuex'
 import Identify from './Identify'
 import { login } from '@/api/user'
 import utils from '@/utils'
 
 export default {
   components: {
-    Identify
+    Identify,
+    Logo
   },
   data () {
     const checkCode = (rule, val, callback) => {
@@ -74,6 +80,9 @@ export default {
     }
   },
   methods: {
+    ...mapMutations('user', [
+      'setUserInfo'
+    ]),
     randomNum (min, max) {
       return Math.floor(Math.random() * (max - min) + min)
     },
@@ -95,6 +104,7 @@ export default {
         if (!err) {
           login(val).then(res => {
             utils.saveLogin(res.token)
+            this.setUserInfo(res)
             // 更新路由 尝试去获取需要重定向的页面完整地址
             const path = this.$route.params.redirect
             // 根据是否存有重定向页面判断如何重定向

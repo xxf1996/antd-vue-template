@@ -17,7 +17,10 @@ export default {
 
 <style scoped>
   .login {
+    position: absolute;
+    top: 50%;
+    left: 50%;
     width: 400px;
-    margin: 120px auto 0 auto;
+    transform: translate(-50%, -50%);
   }
 </style>

@@ -7,6 +7,7 @@ export default {
     icon: 'file-text'
   },
   redirect: { name: 'demo1' },
+  component: () => import('@/layout/RoutePage'),
   children: [
     {
       path: 'demo1',
@@ -34,6 +35,15 @@ export default {
         title: 'Demo3'
       },
       component: () => import('@/pages/demo/Demo3')
+    },
+    {
+      path: 'form',
+      name: 'formDemo',
+      meta: {
+        auth: true,
+        title: '表单组件示例'
+      },
+      component: () => import('@/pages/demo/FormDemo')
     }
   ]
 }

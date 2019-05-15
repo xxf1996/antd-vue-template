@@ -5,12 +5,12 @@
     theme="dark"
     :inlineCollapsed="collapsed"
     :defaultSelectedKeys="[curPath]"
-    :defaultOpenKeys="[]"
-    :style="menuStyle">
+    :defaultOpenKeys="curSub">
     <template v-for="item in menus">
       <sub-menu
         v-if="!!item.children"
         :key="item.name"
+        :menu-key="item.name"
         :info="item"
         :click-menu="clickMenu">
       </sub-menu>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { getMenu } from '@/utils/menu'
+import { getMenu, flatMenu } from '@/utils/menu'
 import SubMenu from './SubMenu'
 
 export default {
@@ -47,24 +47,19 @@ export default {
     }
   },
   computed: {
+    // 当前路由组件的name
     curPath () {
       return this.$route.name
     },
-    menuStyle () {
-      let style = {
-        'box-shadow': '#aaa 2px 0 3px 0, #eee 5px 0 5px 0'
-      }
-      if (this.collapsed) {
-        style.width = '80px'
-      }
-      return style
+    // 展开后的菜单信息Map
+    flatMenus () {
+      return flatMenu(this.menus)
     },
-    menusMap () {
-      let res = new Map()
-      for (let menu of this.menus) {
-        res.set(menu.name, menu)
-      }
-      return res
+    // 当前展开的子菜单项
+    curSub () {
+      let curMenu = this.flatMenus.get(this.curPath)
+      // console.log(curMenu)
+      return curMenu.parent ? [curMenu.parent] : []
     }
   },
   methods: {
@@ -73,7 +68,7 @@ export default {
     }
   },
   created () {
-    console.log(this.menus, this.curPath)
+    console.log(this.menus, this.flatMenus)
   }
 }
 </script>

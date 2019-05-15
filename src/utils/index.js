@@ -28,10 +28,14 @@ function setTitle (title) {
   window.document.title = `${packageInfo.appName || 'xxx平台'}${title ? ` | ${title}` : ''}`
 }
 
+// 应用名称，方便其它文件直接使用
+const APP_NAME = packageInfo.appName
+
 export default {
   log,
   cookies,
   isLogin,
   saveLogin,
-  setTitle
+  setTitle,
+  APP_NAME
 }

@@ -11,3 +11,23 @@ export function login (data) {
     data
   })
 }
+
+/**
+ * 退出当前登录
+ */
+export function logout () {
+  return request({
+    method: 'delete',
+    url: '/api/logout'
+  })
+}
+
+/**
+ * 获取已登录的用户信息（根据session）
+ */
+export function getInfo () {
+  return request({
+    method: 'get',
+    url: '/api/user'
+  })
+}

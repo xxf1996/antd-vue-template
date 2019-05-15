@@ -2,7 +2,7 @@ import { frameInRoutes } from '@/router/routes'
 const MAX_MENU_LEVEL = 3 // 菜单嵌套最大层级
 let menu = []
 
-function generateMenu (menus, pathPrefix = '', level = 1) {
+function generateMenu (menus, parent = null, level = 1) {
   let res
   if (level <= MAX_MENU_LEVEL) {
     res = {}
@@ -11,11 +11,16 @@ function generateMenu (menus, pathPrefix = '', level = 1) {
     }
     res.name = menus.name
     res.title = menus.meta.title || '默认标题'
-    res.path = pathPrefix + '/' + menus.path
+    if (parent) {
+      res.path = parent.path + '/' + menus.path
+      res.parent = parent.name
+    } else {
+      res.path = '/' + menus.path
+    }
     if (menus.children && menus.children.length) {
       res.children = menus.children.filter(item => !item.hidden)
       .map(item => {
-        return generateMenu(item, res.path, level + 1)
+        return generateMenu(item, res, level + 1)
       })
     }
     return res
@@ -33,4 +38,22 @@ export function getMenu () {
   }
 
   return menu
+}
+
+export function flatMenu (menus) {
+  let list = new Map()
+  const flatItem = item => {
+    if (item.children && item.children.length) {
+      for (let one of item.children) {
+        flatItem(one)
+      }
+    }
+    list.set(item.name, item)
+  }
+
+  for (let menu of menus) {
+    flatItem(menu)
+  }
+  
+  return list
 }

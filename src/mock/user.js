@@ -27,5 +27,27 @@ export default [
         }
       }
     }
+  },
+  {
+    path: '/api/logout',
+    method: 'delete',
+    handle () {
+      return {
+        code: 0,
+        msg: '登出成功',
+        data: {}
+      }
+    }
+  },
+  {
+    path: '/api/user',
+    method: 'get',
+    handle () {
+      return {
+        code: 0,
+        msg: '获取用户信息成功',
+        data: { username: 'admin', uuid: 'admin-uuid', name: '管理员' }
+      }
+    }
   }
 ]

@@ -5,6 +5,8 @@ import routes from './routes'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import util from '@/utils'
+import store from '@/store'
+import { getInfo } from '@/api/user'
 
 Vue.use(VueRouter)
 let router = new VueRouter({
@@ -22,6 +24,11 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(r => r.meta.auth)) {
     // 验证用户是否已登录
     if (util.isLogin()) {
+      if (store.state.user.userInfo.username === undefined) {
+        getInfo().then(res => {
+          store.commit('user/setUserInfo', res)
+        })
+      }
       next()
     } else {
       // 没有登录的时候跳转到登录界面
