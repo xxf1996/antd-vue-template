@@ -18,7 +18,7 @@ function generateMenu (menus, parent = null, level = 1) {
     res.name = menus.name
     res.title = menus.meta.title || '默认标题'
     if (parent) {
-      res.path = parent.path + '/' + menus.path
+      res.path = parent.path + '/' + menus.path // 补全完整路由
       res.parent = parent.name
     } else {
       res.path = '/' + menus.path
