@@ -69,9 +69,10 @@ export default {
      */
     validate () {
       return new Promise((resolve, reject) => {
+        // 只对有验证规则的字段进行验证
         this.formInstance.validateFields(Object.keys(this.rules), { forced: true }, err => {
           if (!err) {
-            resolve(this.formInstance.getFieldsValue())
+            resolve(this.formInstance.getFieldsValue()) // 返回表单全部字段的数据
           } else {
             reject(err)
           }

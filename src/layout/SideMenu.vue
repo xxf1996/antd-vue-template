@@ -30,12 +30,14 @@
 import { getMenu, flatMenu } from '@/utils/menu'
 import SubMenu from './SubMenu'
 
+// 侧边菜单
 export default {
   name: 'SideMenu',
   components: {
     SubMenu
   },
   props: {
+    // 菜单收缩状态
     collapsed: {
       type: Boolean,
       default: false
@@ -43,7 +45,7 @@ export default {
   },
   data () {
     return {
-      menus: getMenu()
+      menus: getMenu() // 获取菜单信息
     }
   },
   computed: {
@@ -63,6 +65,7 @@ export default {
     }
   },
   methods: {
+    // 点击菜单项触发路由跳转
     clickMenu (path) {
       this.$router.push(path)
     }

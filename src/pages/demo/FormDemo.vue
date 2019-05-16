@@ -1,6 +1,7 @@
 <template>
   <div class="demo">
     <x-form
+      class="demo-form"
       :rules="demoRules"
       :slot-list="slotList"
       :col-config="colConfig"
@@ -76,3 +77,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.demo-form {
+  width: 500px;
+  margin: 20px auto;
+}
+</style>

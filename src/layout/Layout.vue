@@ -26,6 +26,7 @@ import SideMenu from './SideMenu'
 import TopNav from './TopNav'
 import Logo from '@/components/common/Logo'
 
+// 普通布局组件：左侧菜单，右侧顶部导航栏，其余区域为主体页面
 export default {
   name: 'Layout',
   components: {

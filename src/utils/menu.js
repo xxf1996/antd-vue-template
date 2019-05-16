@@ -2,6 +2,12 @@ import { frameInRoutes } from '@/router/routes'
 const MAX_MENU_LEVEL = 3 // 菜单嵌套最大层级
 let menu = []
 
+/**
+ * 
+ * @param {Object} menus 菜单项信息
+ * @param {Object} parent 当前菜单项的父级菜单
+ * @param {Number} level 菜单层级（从1开始）
+ */
 function generateMenu (menus, parent = null, level = 1) {
   let res
   if (level <= MAX_MENU_LEVEL) {
@@ -29,6 +35,9 @@ function generateMenu (menus, parent = null, level = 1) {
   }
 }
 
+/**
+ * 获取完整菜单信息（树状结构）
+ */
 export function getMenu () {
   menu = []
   for (let item of frameInRoutes.children) {
@@ -40,6 +49,10 @@ export function getMenu () {
   return menu
 }
 
+/**
+ * 将树状结构展开成Map，Map的key为菜单路由的name属性（唯一）
+ * @param {Array} menus 树状结构的菜单信息
+ */
 export function flatMenu (menus) {
   let list = new Map()
   const flatItem = item => {
